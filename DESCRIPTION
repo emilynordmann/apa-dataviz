@@ -1,0 +1,25 @@
+Title: Intro to Data Viz Workshop
+Version: 1.0
+Authors@R:
+  c(
+    person(
+        given = "Emily", 
+        family = "Nordmann", 
+        role = c("aut", "cre"), 
+        email = "Emily.Nordmann@glasgow.ac.uk", 
+        comment = c(ORCID = "0000-0002-0806-1081")
+    )
+  )
+Description: This book contains the materials for a workshop delivered on Intro to Data Viz.
+License: CC BY 4.0 + LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    webexercises,
+    glossary (>= 0.0.0.9001)
+Remotes: 
+    psyteachr/glossary
+Depends: 
+    tidyverse

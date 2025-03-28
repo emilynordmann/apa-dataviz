@@ -1,0 +1,365 @@
+---
+title: "webinar_code"
+author: "Emily Nordmann"
+date: "2025-03-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Webinar
+
+This Rmd file contains all the code you need for the webinar. I would encourage you to make notes in this Rmd as we're going along so that everything is all in the one place.
+
+## Set-up
+
+```{r}
+# if you get the error message "there is no package called X" it means you need to install it - see the guidance notes
+library(tidyverse)
+library(jtools)
+library(ggExtra)
+dat <- read_csv("smarvus_complete_050524.csv")
+```
+
+
+```{r}
+
+demo <- dat %>%
+  select(unique_id, age, gender, degree_major)
+
+STARS <- dat %>%
+  select(unique_id, Q7.1_1:Q7.1_24) %>% # select the STARS columns
+  filter(Q7.1_24 == 1) %>% # remove those who failed the attention check
+  select(-Q7.1_24) %>% # remove the attention check column
+  pivot_longer(cols = Q7.1_1:Q7.1_23, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(stars_score = mean(score, na.rm = TRUE)) %>% # calculate mean STARS score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# Brief Fear of Negative Evaluation Scale
+
+BNFE <- dat %>%
+  select(unique_id, Q11.1_1:Q11.1_9) %>% # select the BNFE columns
+  filter(Q11.1_9 == 3) %>% # remove those who failed the attention check
+  select(-Q11.1_9) %>% # remove the attention check column
+  pivot_longer(cols = Q11.1_1:Q11.1_8, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(bnfe_score = mean(score, na.rm = TRUE)) %>% # calculate mean BNFE score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# Intolerance of Uncertainty.
+
+IUS <- dat %>%
+  select(unique_id, Q14.1_1:Q14.1_12) %>% # select the BNFE columns
+  pivot_longer(cols = Q14.1_1:Q14.1_12, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(ius_score = mean(score, na.rm = TRUE)) %>% # calculate mean IUS-SF score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# join everything together
+
+dat_joined <- inner_join(x = demo, y = STARS, by = "unique_id") %>%
+  inner_join(BNFE, by = "unique_id") %>%
+  inner_join(IUS, by = "unique_id")
+
+# convert categorical data to factors
+
+dat_joined <- dat_joined %>%
+  mutate(age = as.factor(age),
+         gender = as.factor(gender),
+         degree_major = as.factor(degree_major))
+
+# take a subset of the data because some groups have very small sample sizes
+
+dat_final <- dat_joined %>%
+  filter(gender %in% c("Female/Woman", "Male/Man")) %>%
+  mutate(age = case_when(age == "18-21" ~ "18-21",
+                         age == "22-25" ~ "22+",
+                         age == "26+" ~ "22+")) %>%
+  drop_na(age)
+
+# remove all the objects we don't need 
+
+rm(list = c("BNFE", "dat", "dat_joined", "demo", "IUS", "STARS"))
+```
+
+## The Grammar of Graphics
+
+
+```{r}
+# the base
+ggplot()
+
+# adding in data set
+ggplot(data = dat_final, aes(x = stars_score))
+
+# adding layers
+ggplot(data = dat_final, aes(x = stars_score)) +
+  geom_histogram()
+
+# adding more layers
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram() +
+  labs(title = "My first histogram",
+       x = "Mean STARS score",
+       caption = "Isn't R fun")
+```
+
+## Plot types
+
+### One categorical variable
+
+
+```{r}
+ggplot(dat_final, aes(x = degree_major)) +
+  geom_bar()
+```
+
+### One continuous variable
+
+```{r}
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") 
+```
+
+### One Continuous, One Categorical Variable
+
+#### Grouped histograms
+
+```{r}
+# grouped by colour
+ggplot(dat_final, aes(x = stars_score, fill = gender)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0)
+
+# dodged bars
+ggplot(dat_final, aes(x = stars_score, fill = gender)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0,
+                 position = "dodge")
+
+# faceted histogram
+ggplot(dat_final, aes(x = stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0) +
+  facet_wrap(~gender, nrow = 2, scales = "free_y")
+```
+
+####  Density plots 
+
+```{r}
+ggplot(data = dat_final, aes(x = stars_score, fill = gender)) +
+  geom_density(alpha = .4)
+```
+
+#### Boxplots
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_boxplot()
+```
+
+#### Violin plots
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_violin()
+```
+
+#### Violin-boxplots
+
+The order of layers matters!
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_violin() +
+  geom_boxplot(width = .2)
+```
+
+
+### Two Continuous Variables
+
+#### Scatterplots
+
+```{r}
+
+# simple scatterplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point()
+
+# add line of best fit
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# add in a grouping variable to all geoms
+ggplot(dat_final, aes(x = stars_score, y = ius_score, colour = gender)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# add in a grouping variable to one geom
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(aes(colour = gender), method = "lm")
+```
+
+## Making it look nice
+
+### Titles and labels
+
+
+```{r}
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score")
+
+```
+
+### Adding a theme
+
+
+
+```{r}
+
+# theme_minimal from ggplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_minimal()
+
+# theme_classic from ggplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_classic()
+
+# apa theme from jtools
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_apa()
+```
+
+### Adding colour
+
+
+```{r}
+# add colour, remove legend
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none")
+
+# use a colour blind friendly palette
+
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_brewer(palette = "Dark2")
+
+# specify colour manually
+
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue"))
+
+```
+
+### Editing the scale
+
+
+```{r}
+
+# change the breaks
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") +
+  scale_x_continuous(breaks = seq(from = 1, to = 5, by = 0.5))
+
+# changing the labels - be careful of order!
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue")) +
+  scale_x_discrete(labels = c("Woman", "Man"))
+
+# changing the limits
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") +
+  scale_x_continuous(limits = c(0,6))
+
+
+
+```
+
+
+## Going a bit wild
+
+```{r}
+# changing the labels - be careful of order!
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_jitter(width = .25, height = .2, alpha = .2) +
+  geom_violin(alpha =.4) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point", size =2) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", width = .2)+
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue")) +
+  scale_x_discrete(labels = c("Woman", "Man"))+
+  labs(title = "Gender differences in statistics anxiety",
+       x = "Gender",
+       y = "Statistics Anxiety Score") +
+  theme_apa()+
+  annotate(geom = "text",
+           label = "Maybe we need DEI after all",
+           x = 1.5, y = 3.5,
+           hjust = 0, vjust = 1, 
+           color = "black", fontface = "bold",
+           angle = 45) 
+```
+
+
+```{r}
+# marginal histograms
+p <- ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_apa() 
+
+ggMarginal(p, type = "histogram")
+```
+

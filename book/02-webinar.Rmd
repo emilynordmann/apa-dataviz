@@ -1,0 +1,462 @@
+
+# Webinar
+
+## Set-up
+
+```{r echo=FALSE}
+library(tidyverse)
+library(jtools)
+library(ggExtra)
+dat <- read_csv("data/smarvus_complete_050524.csv")
+```
+
+```{r eval=FALSE}
+library(tidyverse)
+library(jtools)
+library(ggExtra)
+dat <- read_csv("smarvus_complete_050524.csv")
+```
+
+
+The dataset is massive so we're going to look at just four different scales. This webinar doesn't have time to cover how to do this but if you're interested, the comments should tell you what it's doing (and you could ask AI to explain it to you as well).
+
+This code creates four objects:
+
+- demo has demographic information, age, gender, and degree major. Age data has been categorised for anonymisation purposes. The option 'Implausible' describes values that were 99 or higher or 17 or lower.
+
+- STARS - Statistics anxiety was measured by the Statistics Anxiety Rating Scale (STARS; Cruise et al., 1985). Each item describes a situation involving statistics such as “Doing an examination in a statistics course” (test and class anxiety), “Interpreting the meaning of a table in a journal article” (interpretation anxiety), or “Going to ask my statistics teacher for individual help with material I am having difficulty understanding” (fear of asking for help). 
+
+- BNFE -  Fear of Negative Evaluation. Fear of negative evaluation was measured using the Brief Fear of Negative Evaluation Scale – Straightforward (BNFE-S; Leary, 1983; Rodebaugh et al., 2004). The scale contains 8 items, including statements such as, “I am afraid that people will find fault with me” and “I often worry that I will say or do the wrong things”. 
+
+- IUS -  Intolerance of Uncertainty. Intolerance of uncertainty was measured using the Intolerance of Uncertainty Scale – Short Form (IUS-SF; Carleton et al., 2007). The scale contains 2 subscales, Prospective Anxiety and Inhibitory Anxiety, each with 6 items. The Prospective Anxiety subscale includes statements such as, “The smallest doubt can stop me from acting”. The Inhibitory Anxiety subscale includes statements such as, “It frustrates me not having all the information I need”. 
+
+For the three scales, the code takes the responses to each individual item and generates a single mean score for each participant. 
+
+```{r}
+
+demo <- dat %>%
+  select(unique_id, age, gender, degree_major)
+
+STARS <- dat %>%
+  select(unique_id, Q7.1_1:Q7.1_24) %>% # select the STARS columns
+  filter(Q7.1_24 == 1) %>% # remove those who failed the attention check
+  select(-Q7.1_24) %>% # remove the attention check column
+  pivot_longer(cols = Q7.1_1:Q7.1_23, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(stars_score = mean(score, na.rm = TRUE)) %>% # calculate mean STARS score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# Brief Fear of Negative Evaluation Scale
+
+BNFE <- dat %>%
+  select(unique_id, Q11.1_1:Q11.1_9) %>% # select the BNFE columns
+  filter(Q11.1_9 == 3) %>% # remove those who failed the attention check
+  select(-Q11.1_9) %>% # remove the attention check column
+  pivot_longer(cols = Q11.1_1:Q11.1_8, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(bnfe_score = mean(score, na.rm = TRUE)) %>% # calculate mean BNFE score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# Intolerance of Uncertainty.
+
+IUS <- dat %>%
+  select(unique_id, Q14.1_1:Q14.1_12) %>% # select the BNFE columns
+  pivot_longer(cols = Q14.1_1:Q14.1_12, names_to = "item", values_to = "score") %>% # transform to long-form
+  group_by(unique_id) %>% # group by participant
+  summarise(ius_score = mean(score, na.rm = TRUE)) %>% # calculate mean IUS-SF score for each ppt
+  ungroup() %>% # ungroup so it doesn't mess things up later
+  drop_na() #  get rid of NAs so they don't cause us havoc
+
+# join everything together
+
+dat_joined <- inner_join(x = demo, y = STARS, by = "unique_id") %>%
+  inner_join(BNFE, by = "unique_id") %>%
+  inner_join(IUS, by = "unique_id")
+
+# convert categorical data to factors
+
+dat_joined <- dat_joined %>%
+  mutate(age = as.factor(age),
+         gender = as.factor(gender),
+         degree_major = as.factor(degree_major))
+
+# take a subset of the data because some groups have very small sample sizes
+
+dat_final <- dat_joined %>%
+  filter(gender %in% c("Female/Woman", "Male/Man")) %>%
+  mutate(age = case_when(age == "18-21" ~ "18-21",
+                         age == "22-25" ~ "22+",
+                         age == "26+" ~ "22+")) %>%
+  drop_na(age)
+
+# remove all the objects we don't need 
+
+rm(list = c("BNFE", "dat", "dat_joined", "demo", "IUS", "STARS"))
+```
+
+## The Grammar of Graphics
+
+The `ggplot2` package is based on **the Grammar of Graphics**, a theoretical framework developed by Leland Wilkinson (2005), which describes how statistical graphics are constructed from a layered and modular set of components. This approach treats graphics as a visual language, where each plot is built by combining several independent elements such as data, mappings (aesthetic relationships between data and visual properties), geometric objects, statistical transformations, coordinate systems, and themes.
+
+At its core, `ggplot2` requires at least three elements:
+1. **A dataset**, containing the variables of interest.
+2. **Aesthetics (`aes()`)**, which map variables in the dataset to visual properties such as position, colour, size, and shape.
+3. **Geometric objects (`geoms`)**, which specify what kind of plot to draw—e.g., bars, points, lines, or boxplots.
+
+Together, these components form a flexible system that allows users to build complex and meaningful data visualisations in a structured way. For example:
+
+This modular design encourages users to think critically about the story they want their data to tell and to construct visualisations that are both analytically rigorous and aesthetically effective (Healy, 2018). It also facilitates reproducibility and clarity in data science workflows, as each component of the plot is explicitly stated in the code.
+
+
+```{r}
+# the base
+ggplot()
+
+# adding in data set
+ggplot(data = dat_final, aes(x = stars_score))
+
+# adding layers
+ggplot(data = dat_final, aes(x = stars_score)) +
+  geom_histogram()
+
+# adding more layers
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram() +
+  labs(title = "My first histogram",
+       x = "Mean STARS score",
+       caption = "Isn't R fun")
+```
+
+## Plot types
+
+### One categorical variable
+
+When you have a single **categorical variable**, a **bar chart** is typically the most appropriate way to visualise the frequency (i.e., count) of each category. In `ggplot2`, this is achieved using `geom_bar()`, which by default **counts the number of observations** in each category and plots those counts as bars.
+
+#### Important note:
+`geom_bar()` should not be confused with `geom_col()`. While `geom_bar()` **calculates the y-values (counts) automatically**, `geom_col()` requires you to **supply both x and y values explicitly**, and is typically used when you are plotting summary statistics (e.g., means, proportions).
+
+#### Why we do not plot means for a single categorical variable:
+A common mistake is to try to use a bar chart to visualise the **mean of a numeric variable** for each category. This approach is often discouraged because bar heights suggest frequencies, and the lack of distributional information (e.g., variability or sample size) can be misleading. Instead, when you wish to compare a numeric outcome across groups, better options include:
+- **Boxplots**: Show medians, quartiles, and potential outliers.
+- **Violin plots**: Combine density estimation with summary statistics.
+- **Dotplots or jittered points**: Especially helpful when sample sizes are small.
+
+That said, for purely categorical data—such as visualising how many students are enrolled in each degree programme or how many participants identify with a particular gender—bar charts are both simple and effective.
+
+```{r}
+ggplot(dat_final, aes(x = degree_major)) +
+  geom_bar()
+```
+
+### One continuous variable
+
+When you have a single **continuous variable**, one of the most informative and commonly used visualisations is the **histogram**. Histograms show the **distribution** of a continuous variable by dividing the range of values into **intervals**, known as *bins*, and then counting how many observations fall into each bin. The resulting bars provide a visual summary of the **shape, centre, and spread** of the data.
+
+#### Considerations when choosing bin width
+
+The choice of bin width is crucial. A **bin width that is too large** can obscure important features of the distribution, such as multimodality or skewness. Conversely, a **bin width that is too small** may introduce too much noise, creating a fragmented plot that is difficult to interpret.
+
+Histograms are best suited for **exploratory data analysis**, allowing researchers to assess:
+- Whether the distribution is symmetric, skewed, or multimodal,
+- The presence of outliers or gaps,
+- The approximate range and density of values.
+
+As a visualisation of a single variable, histograms serve as a critical first step in understanding the structure of your data.
+
+
+```{r}
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") 
+```
+
+### One Continuous, One Categorical Variable
+
+When visualising the relationship between a **continuous variable** and a **categorical variable**, the goal is typically to compare the **distribution of the continuous variable across the levels of the categorical variable**. Several types of plots can be used for this purpose, each offering different advantages depending on the nature of the data and the story one wishes to tell.
+
+One of the most common and informative options is the **boxplot**. A boxplot provides a compact summary of the distribution of the continuous variable within each category. It shows the median, interquartile range, and potential outliers, allowing for quick visual comparisons of central tendency and spread between groups. Boxplots are particularly useful when comparing several groups side by side, as they are less sensitive to skewness and extreme values than some other visualisations.
+
+An alternative is the **violin plot**, which builds upon the boxplot by incorporating a mirrored density plot on each side of the box. This adds information about the shape of the distribution, including multimodality, while still retaining the median and interquartile range. Violin plots are well suited to larger datasets, where the estimation of the density is more stable.
+
+Another option is the **histogram stratified by group**. This can be implemented in one of several ways:
+- By overlaying histograms using colour or transparency,
+- By “dodging” the bars to place them side by side, or
+- By using faceting to produce a separate plot for each group.
+
+Each of these approaches has trade-offs. Overlaid histograms can obscure the data if the number of groups is large or if the distributions overlap substantially. Dodged histograms make group comparisons easier but may misrepresent frequency when bins align differently between groups. Faceting, where each group is displayed in a separate panel, provides the clearest visual separation but makes direct comparisons slightly more difficult unless axes are held constant.
+
+Finally, **density plots** serve a similar purpose to histograms but offer a smooth, continuous estimate of the distribution. When stratified by a categorical variable, density plots are effective for assessing overlap, skewness, and differences in modality between groups. However, unlike histograms, density plots do not represent actual counts or frequencies, and their interpretation may be less intuitive for novice audiences.
+
+In choosing among these options, one should consider the **sample size**, the **shape and variability of the data**, and the **intended audience**. For smaller samples, more granular plots such as jittered points or dot plots may be more appropriate. For larger samples, density-based methods and summaries such as boxplots or violins become more effective.
+
+Understanding how to visualise a continuous variable across groups is fundamental for comparing subpopulations, evaluating treatment effects, or identifying systematic differences in observational data.
+
+#### Grouped histograms
+
+```{r}
+# grouped by colour
+ggplot(dat_final, aes(x = stars_score, fill = gender)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0)
+
+# dodged bars
+ggplot(dat_final, aes(x = stars_score, fill = gender)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0,
+                 position = "dodge")
+
+# faceted histogram
+ggplot(dat_final, aes(x = stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0) +
+  facet_wrap(~gender, nrow = 2, scales = "free_y")
+```
+
+####  Density plots 
+
+```{r}
+ggplot(data = dat_final, aes(x = stars_score, fill = gender)) +
+  geom_density(alpha = .4)
+```
+
+#### Boxplots
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_boxplot()
+```
+
+#### Violin plots
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_violin()
+```
+
+#### Violin-boxplots
+
+The order of layers matters!
+
+```{r}
+ggplot(dat_final, aes(x = gender, y = stars_score)) +
+  geom_violin() +
+  geom_boxplot(width = .2)
+```
+
+
+### Two Continuous Variables
+
+When working with **two continuous variables**, the primary objective of visualisation is to explore their **relationship or association**. The most commonly used plot for this purpose is the **scatterplot**, which places one variable on the x-axis and the other on the y-axis, with each point representing a single observation.
+
+Scatterplots are particularly valuable for assessing the **form, direction, and strength of relationships** between two variables. Patterns in the data—such as linear or non-linear trends, clusters, or outliers—can often be detected visually before any formal statistical modelling is applied. A positively sloped pattern, for example, may suggest a direct relationship between variables, while a negatively sloped one may indicate an inverse relationship. Curvilinear or segmented trends may suggest more complex interactions that warrant further exploration.
+
+One common extension of the basic scatterplot involves the addition of a **fitted line**, such as a linear regression line, to summarise the general trend in the data. This can assist viewers in interpreting the relationship more easily, especially when the raw data points are numerous or variable. A confidence interval is often included around the line to provide a visual sense of uncertainty about the estimated trend.
+
+In many cases, it is also informative to **introduce a third variable**, typically a categorical variable, into the visualisation using **colour or shape**. This enables the examination of whether the relationship between the two continuous variables differs across groups. For example, one might investigate whether the association between anxiety and uncertainty varies by gender or age group. These grouped scatterplots are especially powerful when investigating interactions or potential moderating effects.
+
+However, introducing grouping variables requires caution. Overplotting—where too many points obscure one another—can make the visualisation difficult to interpret. In such cases, techniques such as transparency (alpha blending), point jittering, or the use of smaller point sizes can improve readability. Alternatively, **faceting** may be used to split the plot into panels by group, allowing for clear, group-specific visualisations while preserving the structure of the original scatterplot.
+
+#### Scatterplots
+
+```{r}
+
+# simple scatterplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point()
+
+# add line of best fit
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# add in a grouping variable to all geoms
+ggplot(dat_final, aes(x = stars_score, y = ius_score, colour = gender)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# add in a grouping variable to one geom
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(aes(colour = gender), method = "lm")
+```
+
+## Making it look nice
+
+### Titles and labels
+
+Clear and descriptive titles and axis labels are essential for effective data visualisation. They help the viewer interpret the plot accurately and quickly. A well-chosen title conveys the main message of the plot, while subtitles can provide additional context or interpretative guidance, such as indicating the nature or direction of a relationship. 
+
+Axis labels should clearly identify the variables being plotted and include appropriate units if applicable. Avoid abbreviations or overly technical terms unless they are familiar to your audience. Good labelling ensures that your visualisations can be understood without requiring explanation from the presenter or accompanying text. 
+
+The `labs()` function in `ggplot2` allows you to specify the title, subtitle, axis labels, caption, and legend titles, all in a single place. This function should be used as part of a consistent practice of annotating all plots clearly and professionally.
+
+```{r}
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score")
+
+```
+
+### Adding a theme
+
+Themes in `ggplot2` control the **non-data elements** of a plot—such as background colour, gridlines, font size, margins, and axis line styles. By default, `ggplot2` applies the `theme_grey()` theme, which uses a grey background and white gridlines. While this is functional, other themes can often improve clarity or align better with publication standards.
+
+The choice of theme can have a substantial impact on the visual appeal and readability of a plot. For example, `theme_minimal()` offers a clean, white background with minimal distraction, making it ideal for presentations and teaching. `theme_classic()` provides a more traditional, academic appearance, resembling hand-drawn plots or older textbook figures. Alternatively, the `theme_apa()` from the `jtools` package adheres to the American Psychological Association's publication style, which is particularly helpful in psychology and related disciplines.
+
+Consistent use of themes across all plots in a project or presentation contributes to a professional and cohesive visual identity. It also helps focus the viewer’s attention on the data, rather than on stylistic inconsistencies or extraneous visual elements.
+
+```{r}
+
+# theme_minimal from ggplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_minimal()
+
+# theme_classic from ggplot
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_classic()
+
+# apa theme from jtools
+ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_apa()
+```
+
+### Adding colour
+
+Colour is a powerful tool in data visualisation, capable of highlighting group differences, drawing attention to key patterns, and improving interpretability. However, it must be used judiciously. When introducing colour, it is important to ensure that it adds meaningful information and does not create unnecessary visual clutter or redundancy.
+
+In many cases, the default behaviour of `ggplot2` will include a colour legend when a grouping variable is mapped to an aesthetic such as `fill` or `colour`. If this grouping is already evident from the axis (e.g., when grouping is shown along the x-axis), the legend may be redundant. Removing it can make the plot cleaner and more space-efficient, particularly in slide-based or publication formats.
+
+Colour choice should also take accessibility into account. For example, using a **colour-blind friendly palette**, such as `"Dark2"` from the `RColorBrewer` package, ensures that plots are interpretable by a wider audience, including those with common forms of colour vision deficiency. This is a critical consideration in inclusive teaching and communication.
+
+Finally, when the default palettes do not meet the presentational needs or aesthetic preferences of the analyst, colours can be specified manually. This provides full control over the visual appearance and is particularly useful when aligning plots with institutional branding or publication requirements.
+
+```{r}
+# add colour, remove legend
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none")
+
+# use a colour blind friendly palette
+
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_brewer(palette = "Dark2")
+
+# specify colour manually
+
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue"))
+
+```
+
+### Editing the scale
+
+Scale functions in `ggplot2` control how data values are mapped to visual properties such as position, colour, or size. When used thoughtfully, editing the scale can significantly improve the interpretability and precision of a plot.
+
+One common modification is adjusting the **breaks** on an axis. This allows the analyst to specify exactly where tick marks should appear, which can aid interpretation and consistency across plots—especially when comparing multiple figures side by side. For example, specifying regular intervals (e.g., every 0.5 units) on a continuous scale can make trends more apparent and reduce cognitive load for the viewer.
+
+In addition to breaks, **axis labels** may need to be edited to improve clarity or accessibility. For categorical axes, this often involves renaming factor levels to use plain language or more inclusive terminology. However, it is important to ensure that the order of labels matches the underlying factor levels in the data to avoid unintended mismatches or misinterpretation.
+
+Another common modification is setting **limits** on a scale, which controls the minimum and maximum values displayed on an axis. This can be useful for focusing the viewer’s attention on a relevant range or ensuring that multiple plots share the same axis limits for valid comparison. That said, limits should be chosen carefully to avoid omitting important data or misleading the viewer by exaggerating or minimising differences.
+
+
+```{r}
+
+# change the breaks
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") +
+  scale_x_continuous(breaks = seq(from = 1, to = 5, by = 0.5))
+
+# changing the labels - be careful of order!
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue")) +
+  scale_x_discrete(labels = c("Woman", "Man"))
+
+# changing the limits
+ggplot(data = dat_final, aes(stars_score)) +
+  geom_histogram(binwidth = .25, 
+                 boundary = 0, 
+                 colour = "black",
+                 fill = "lightblue") +
+  scale_x_continuous(limits = c(0,6))
+
+
+
+```
+
+
+## Going a bit wild
+
+```{r}
+# changing the labels - be careful of order!
+ggplot(dat_final, aes(x = gender, y = stars_score, fill = gender)) +
+  geom_jitter(width = .25, height = .2, alpha = .2) +
+  geom_violin(alpha =.4) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point", size =2) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", width = .2)+
+  guides(fill = "none") +
+  scale_fill_manual(values = c("darkgrey", "lightblue")) +
+  scale_x_discrete(labels = c("Woman", "Man"))+
+  labs(title = "Gender differences in statistics anxiety",
+       x = "Gender",
+       y = "Statistics Anxiety Score") +
+  theme_apa()+
+  annotate(geom = "text",
+           label = "Maybe we need DEI after all",
+           x = 1.5, y = 3.5,
+           hjust = 0, vjust = 1, 
+           color = "black", fontface = "bold",
+           angle = 45) 
+```
+
+
+```{r}
+# marginal histograms
+p <- ggplot(dat_final, aes(x = stars_score, y = ius_score)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relationship between IUS and STARS",
+       subtitle = "Positive correlation",
+       x = "Statistics Anxiety Score",
+       y = "Intolerance of Uncertainity Score") +
+  theme_apa() 
+
+ggMarginal(p, type = "histogram")
+```
+
