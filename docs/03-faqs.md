@@ -4,7 +4,7 @@ Before the webinar, you were given the opportunity to ask questions. Here are re
 
 ### Why should I use R for data viz?
 
-I am going to entirely plagiarism from our paper: [Data Visualization Using R for Researchers Who Do Not Use R[(https://journals.sagepub.com/doi/10.1177/25152459221074654)]
+I am going to entirely plagiarism from our paper: [Data Visualization Using R for Researchers Who Do Not Use R](https://journals.sagepub.com/doi/10.1177/25152459221074654)
 
 > Data visualization benefits from the same advantages as statistical analysis when writing code rather than using point-and-click software—reproducibility and transparency. The need for psychological researchers to work in reproducible ways has been well documented and discussed in response to the replication crisis (e.g., Munafò et al., 2017), and we will not repeat those arguments here. However, there is an additional benefit to reproducibility that is less frequently acknowledged compared with the loftier goals of improving psychological science: If you write code to produce your plots, you can reuse and adapt that code in the future rather than starting from scratch each time.
 
