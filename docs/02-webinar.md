@@ -1,28 +1,11 @@
 
 # Webinar
 
+Please make sure you have <a href="data/webinar_files.zip" download>downloaded the data files</a>. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.
+
 ## Set-up
 
 
-```
-## Warning: package 'jtools' was built under R version 4.3.3
-```
-
-```
-## Warning: package 'ggExtra' was built under R version 4.3.3
-```
-
-```
-## Rows: 12570 Columns: 788
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: ","
-## chr (526): unique_id, survey_id, country, language, incentive, participation...
-## dbl (247): progress, duration, Q7.1_1, Q7.1_2, Q7.1_3, Q7.1_4, Q7.1_5, Q7.1_...
-## lgl  (15): topic_meta_analysis, in_person_seminars_specify, in_person_exam_s...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
 
 
 ```r

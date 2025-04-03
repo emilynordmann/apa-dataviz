@@ -1,9 +1,11 @@
 
 # Webinar
 
+Please make sure you have <a href="data/webinar_files.zip" download>downloaded the data files</a>. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.
+
 ## Set-up
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(jtools)
 library(ggExtra)

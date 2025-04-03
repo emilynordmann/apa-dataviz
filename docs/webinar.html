@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 2 Webinar | Intro to Data Viz Using R</title>
 <meta name="author" content="Emily Nordmann">
-<meta name="description" content="2.1 Set-up ## Warning: package 'jtools' was built under R version 4.3.3 ## Warning: package 'ggExtra' was built under R version 4.3.3 ## Rows: 12570 Columns: 788 ## ── Column specification...">
+<meta name="description" content="Please make sure you have downloaded the data files. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.  2.1 Set-up library(tidyverse)...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Webinar | Intro to Data Viz Using R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://emilynordmann.github.io/apa-dataviz/webinar.html">
 <meta property="og:image" content="https://emilynordmann.github.io/apa-dataviz/images/logos/logo.png">
-<meta property="og:description" content="2.1 Set-up ## Warning: package 'jtools' was built under R version 4.3.3 ## Warning: package 'ggExtra' was built under R version 4.3.3 ## Rows: 12570 Columns: 788 ## ── Column specification...">
+<meta property="og:description" content="Please make sure you have downloaded the data files. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.  2.1 Set-up library(tidyverse)...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 Webinar | Intro to Data Viz Using R">
-<meta name="twitter:description" content="2.1 Set-up ## Warning: package 'jtools' was built under R version 4.3.3 ## Warning: package 'ggExtra' was built under R version 4.3.3 ## Rows: 12570 Columns: 788 ## ── Column specification...">
+<meta name="twitter:description" content="Please make sure you have downloaded the data files. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.  2.1 Set-up library(tidyverse)...">
 <meta name="twitter:image" content="https://emilynordmann.github.io/apa-dataviz/images/logos/logo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -95,22 +95,12 @@
 <h1>
 <span class="header-section-number">2</span> Webinar<a class="anchor" aria-label="anchor" href="#webinar"><i class="fas fa-link"></i></a>
 </h1>
+<p>Please make sure you have <a href="data/webinar_files.zip" download>downloaded the data files</a>. Unzip the folder and use the Rmd file as it contains the code written in this chapter and space to make notes.</p>
 <div id="set-up" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> Set-up<a class="anchor" aria-label="anchor" href="#set-up"><i class="fas fa-link"></i></a>
 </h2>
-<pre><code>## Warning: package 'jtools' was built under R version 4.3.3</code></pre>
-<pre><code>## Warning: package 'ggExtra' was built under R version 4.3.3</code></pre>
-<pre><code>## Rows: 12570 Columns: 788
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: ","
-## chr (526): unique_id, survey_id, country, language, incentive, participation...
-## dbl (247): progress, duration, Q7.1_1, Q7.1_2, Q7.1_3, Q7.1_4, Q7.1_5, Q7.1_...
-## lgl  (15): topic_meta_analysis, in_person_seminars_specify, in_person_exam_s...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jtools.jacob-long.com">jtools</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daattali/ggExtra">ggExtra</a></span><span class="op">)</span></span>
@@ -124,7 +114,7 @@
 <li><p>IUS - Intolerance of Uncertainty. Intolerance of uncertainty was measured using the Intolerance of Uncertainty Scale – Short Form (IUS-SF; Carleton et al., 2007). The scale contains 2 subscales, Prospective Anxiety and Inhibitory Anxiety, each with 6 items. The Prospective Anxiety subscale includes statements such as, “The smallest doubt can stop me from acting”. The Inhibitory Anxiety subscale includes statements such as, “It frustrates me not having all the information I need”.</p></li>
 </ul>
 <p>For the three scales, the code takes the responses to each individual item and generates a single mean score for each participant.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">unique_id</span>, <span class="va">age</span>, <span class="va">gender</span>, <span class="va">degree_major</span><span class="op">)</span></span>
 <span></span>
@@ -197,21 +187,21 @@
 3. <strong>Geometric objects (<code>geoms</code>)</strong>, which specify what kind of plot to draw—e.g., bars, points, lines, or boxplots.</p>
 <p>Together, these components form a flexible system that allows users to build complex and meaningful data visualisations in a structured way. For example:</p>
 <p>This modular design encourages users to think critically about the story they want their data to tell and to construct visualisations that are both analytically rigorous and aesthetically effective (Healy, 2018). It also facilitates reproducibility and clarity in data science workflows, as each component of the plot is explicitly stated in the code.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the base</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adding in data set</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-4-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adding layers</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-4-3.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adding more layers</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -245,7 +235,7 @@
 - <strong>Violin plots</strong>: Combine density estimation with summary statistics.
 - <strong>Dotplots or jittered points</strong>: Especially helpful when sample sizes are small.</p>
 <p>That said, for purely categorical data—such as visualising how many students are enrolled in each degree programme or how many participants identify with a particular gender—bar charts are both simple and effective.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">degree_major</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -266,7 +256,7 @@
 - The presence of outliers or gaps,
 - The approximate range and density of values.</p>
 <p>As a visualisation of a single variable, histograms serve as a critical first step in understanding the structure of your data.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
 <span>                 boundary <span class="op">=</span> <span class="fl">0</span>, </span>
@@ -294,20 +284,20 @@
 <h4>
 <span class="header-section-number">2.3.3.1</span> Grouped histograms<a class="anchor" aria-label="anchor" href="#grouped-histograms"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># grouped by colour</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
 <span>                 boundary <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dodged bars</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
 <span>                 boundary <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>                 position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-7-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># faceted histogram</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
@@ -319,7 +309,7 @@
 <h4>
 <span class="header-section-number">2.3.3.2</span> Density plots<a class="anchor" aria-label="anchor" href="#density-plots"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-8-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -328,7 +318,7 @@
 <h4>
 <span class="header-section-number">2.3.3.3</span> Boxplots<a class="anchor" aria-label="anchor" href="#boxplots"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -337,7 +327,7 @@
 <h4>
 <span class="header-section-number">2.3.3.4</span> Violin plots<a class="anchor" aria-label="anchor" href="#violin-plots"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -347,7 +337,7 @@
 <span class="header-section-number">2.3.3.5</span> Violin-boxplots<a class="anchor" aria-label="anchor" href="#violin-boxplots"><i class="fas fa-link"></i></a>
 </h4>
 <p>The order of layers matters!</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span></span></code></pre></div>
@@ -367,26 +357,26 @@
 <h4>
 <span class="header-section-number">2.3.4.1</span> Scatterplots<a class="anchor" aria-label="anchor" href="#scatterplots"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simple scatterplot</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add line of best fit</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-12-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add in a grouping variable to all geoms</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span>, colour <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-12-3.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add in a grouping variable to one geom</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -407,7 +397,7 @@
 <p>Clear and descriptive titles and axis labels are essential for effective data visualisation. They help the viewer interpret the plot accurately and quickly. A well-chosen title conveys the main message of the plot, while subtitles can provide additional context or interpretative guidance, such as indicating the nature or direction of a relationship.</p>
 <p>Axis labels should clearly identify the variables being plotted and include appropriate units if applicable. Avoid abbreviations or overly technical terms unless they are familiar to your audience. Good labelling ensures that your visualisations can be understood without requiring explanation from the presenter or accompanying text.</p>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> function in <code>ggplot2</code> allows you to specify the title, subtitle, axis labels, caption, and legend titles, all in a single place. This function should be used as part of a consistent practice of annotating all plots clearly and professionally.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -425,7 +415,7 @@
 <p>Themes in <code>ggplot2</code> control the <strong>non-data elements</strong> of a plot—such as background colour, gridlines, font size, margins, and axis line styles. By default, <code>ggplot2</code> applies the <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_grey()</a></code> theme, which uses a grey background and white gridlines. While this is functional, other themes can often improve clarity or align better with publication standards.</p>
 <p>The choice of theme can have a substantial impact on the visual appeal and readability of a plot. For example, <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal()</a></code> offers a clean, white background with minimal distraction, making it ideal for presentations and teaching. <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic()</a></code> provides a more traditional, academic appearance, resembling hand-drawn plots or older textbook figures. Alternatively, the <code><a href="https://jtools.jacob-long.com/reference/theme_apa.html">theme_apa()</a></code> from the <code>jtools</code> package adheres to the American Psychological Association's publication style, which is particularly helpful in psychology and related disciplines.</p>
 <p>Consistent use of themes across all plots in a project or presentation contributes to a professional and cohesive visual identity. It also helps focus the viewer’s attention on the data, rather than on stylistic inconsistencies or extraneous visual elements.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># theme_minimal from ggplot</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -437,7 +427,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># theme_classic from ggplot</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -449,7 +439,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-14-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># apa theme from jtools</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -470,13 +460,13 @@
 <p>In many cases, the default behaviour of <code>ggplot2</code> will include a colour legend when a grouping variable is mapped to an aesthetic such as <code>fill</code> or <code>colour</code>. If this grouping is already evident from the axis (e.g., when grouping is shown along the x-axis), the legend may be redundant. Removing it can make the plot cleaner and more space-efficient, particularly in slide-based or publication formats.</p>
 <p>Colour choice should also take accessibility into account. For example, using a <strong>colour-blind friendly palette</strong>, such as <code>"Dark2"</code> from the <code>RColorBrewer</code> package, ensures that plots are interpretable by a wider audience, including those with common forms of colour vision deficiency. This is a critical consideration in inclusive teaching and communication.</p>
 <p>Finally, when the default palettes do not meet the presentational needs or aesthetic preferences of the analyst, colours can be specified manually. This provides full control over the visual appearance and is particularly useful when aligning plots with institutional branding or publication requirements.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add colour, remove legend</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use a colour blind friendly palette</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -484,7 +474,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-15-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># specify colour manually</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -501,7 +491,7 @@
 <p>One common modification is adjusting the <strong>breaks</strong> on an axis. This allows the analyst to specify exactly where tick marks should appear, which can aid interpretation and consistency across plots—especially when comparing multiple figures side by side. For example, specifying regular intervals (e.g., every 0.5 units) on a continuous scale can make trends more apparent and reduce cognitive load for the viewer.</p>
 <p>In addition to breaks, <strong>axis labels</strong> may need to be edited to improve clarity or accessibility. For categorical axes, this often involves renaming factor levels to use plain language or more inclusive terminology. However, it is important to ensure that the order of labels matches the underlying factor levels in the data to avoid unintended mismatches or misinterpretation.</p>
 <p>Another common modification is setting <strong>limits</strong> on a scale, which controls the minimum and maximum values displayed on an axis. This can be useful for focusing the viewer’s attention on a relevant range or ensuring that multiple plots share the same axis limits for valid comparison. That said, limits should be chosen carefully to avoid omitting important data or misleading the viewer by exaggerating or minimising differences.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change the breaks</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
@@ -510,7 +500,7 @@
 <span>                 fill <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">1</span>, to <span class="op">=</span> <span class="fl">5</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># changing the labels - be careful of order!</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -518,7 +508,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"darkgrey"</span>, <span class="st">"lightblue"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Woman"</span>, <span class="st">"Man"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-16-2.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># changing the limits</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">stars_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, </span>
@@ -533,7 +523,7 @@
 <h2>
 <span class="header-section-number">2.5</span> Going a bit wild<a class="anchor" aria-label="anchor" href="#going-a-bit-wild"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># changing the labels - be careful of order!</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">stars_score</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.25</span>, height <span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -555,7 +545,7 @@
 <span>           color <span class="op">=</span> <span class="st">"black"</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>,</span>
 <span>           angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-figure"><img src="02-webinar_files/figure-html/unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># marginal histograms</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat_final</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">stars_score</span>, y <span class="op">=</span> <span class="va">ius_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>

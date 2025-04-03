@@ -13,6 +13,7 @@ I am going to entirely plagiarism from our paper: [Data Visualization Using R fo
 ### What are the best resources for learning R as a beginner?
 
 If you're a complete beginner and a psychology, I can recommend our own PsyTeachR collection:
+
 - [Data Skills](https://psyteachr.github.io/data-skills-v3/) is our 1st year undergrad course and is a very slow introduction to working in R, data wrangling, descriptives, and data viz
 - [Analysis](https://psyteachr.github.io/analysis-v3/) is our 2nd year UG resource and introduce inferential stats: chi-square, correlation, t-test, ANOVA, and regression
 - [Statistical models](https://psyteachr.github.io/stat-models-v1/) is our 3rd year UG resource and goes full GLM and introduces mixed effect models
