@@ -364,21 +364,21 @@ Restart your R session and then run the below code by copying and pasting it all
 
 ```r
 library(tidyverse)
+library(jtools)
 library(patchwork)
-library(ggthemes)
 
 data(starwars)
 
 mass <- ggplot(starwars, aes(x = mass)) +
   geom_histogram() +
-  theme_economist() +
+  theme_apa() +
   labs(title = "Star Wars", 
        subtitle = "Character Mass (Kg)",
        x = NULL, y = NULL)
 
 height <- ggplot(starwars, aes(x = height)) +
   geom_histogram() +
-  theme_economist() +
+  theme_apa() +
   labs(subtitle = "Character Height (cm)",
        x = NULL, y = NULL)
 
@@ -390,101 +390,6 @@ mass + height
 If you get the error `there is no package called...`, make sure you have installed all the packages listed in Section\ \@ref(install-package).
 
 If you are having technical issues working on your own machine and cannot get the below code to run, please use [RStudio Cloud](https://rstudio.cloud/) for the workshop as there will not be time to troubleshoot installation problems.
-
-## Glossary {#glossary-intro}
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> definition </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> argument </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> base R </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> character </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> chunk </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> conflict </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRAN </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> data wrangling </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> factor </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> function </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> IDE </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> knit </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> object </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> package </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> panes </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> R Markdown </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> reproducibility </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> script </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> string </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> vector </td>
-   <td style="text-align:left;">  </td>
-  </tr>
-</tbody>
-</table>
-
-
 
 ## Further Resources {#resources-intro}
 

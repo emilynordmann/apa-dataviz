@@ -341,21 +341,21 @@ Restart your R session and then run the below code by copying and pasting it all
 
 ```{r message = FALSE, warning = FALSE}
 library(tidyverse)
+library(jtools)
 library(patchwork)
-library(ggthemes)
 
 data(starwars)
 
 mass <- ggplot(starwars, aes(x = mass)) +
   geom_histogram() +
-  theme_economist() +
+  theme_apa() +
   labs(title = "Star Wars", 
        subtitle = "Character Mass (Kg)",
        x = NULL, y = NULL)
 
 height <- ggplot(starwars, aes(x = height)) +
   geom_histogram() +
-  theme_economist() +
+  theme_apa() +
   labs(subtitle = "Character Height (cm)",
        x = NULL, y = NULL)
 
@@ -365,10 +365,6 @@ mass + height
 If you get the error `there is no package called...`, make sure you have installed all the packages listed in Section\ \@ref(install-package).
 
 If you are having technical issues working on your own machine and cannot get the below code to run, please use [RStudio Cloud](https://rstudio.cloud/) for the workshop as there will not be time to troubleshoot installation problems.
-
-## Glossary {#glossary-intro}
-
-`r glossary_table()`
 
 ## Further Resources {#resources-intro}
 

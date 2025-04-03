@@ -2,6 +2,14 @@
 
 Before the webinar, you were given the opportunity to ask questions. Here are responses to the most frequent.
 
+### Why should I use R for data viz?
+
+I am going to entirely plagiarism from our paper: [Data Visualization Using R for Researchers Who Do Not Use R[(https://journals.sagepub.com/doi/10.1177/25152459221074654)]
+
+> Data visualization benefits from the same advantages as statistical analysis when writing code rather than using point-and-click software—reproducibility and transparency. The need for psychological researchers to work in reproducible ways has been well documented and discussed in response to the replication crisis (e.g., Munafò et al., 2017), and we will not repeat those arguments here. However, there is an additional benefit to reproducibility that is less frequently acknowledged compared with the loftier goals of improving psychological science: If you write code to produce your plots, you can reuse and adapt that code in the future rather than starting from scratch each time.
+
+> In addition to the benefits of reproducibility, using R for data visualization gives the researcher almost total control over each element of the plot. Although this flexibility can seem daunting at first, the ability to write reusable code recipes (and use recipes created by others) is highly advantageous. The level of customization and the professional outputs available using R has, for instance, led news outlets such as the BBC (BBC Visual and Data Journalism, 2019) and The New York Times (Bertini & Stefaner, 2015) to adopt R as their preferred data-visualization tool."
+
 ### What are the best resources for learning R as a beginner?
 
 If you're a complete beginner and a psychology, I can recommend our own PsyTeachR collection:
@@ -24,7 +32,7 @@ For resources that weren't written by my team:
 - [The R Graph Gallery](https://r-graph-gallery.com/)
 - [ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/)
 
-### How can I use AI to help me learn to code
+### How can I use AI to help me learn to code/
 
 We've written a companion book: [AITutoR](https://psyteachr.github.io/AITutoR/)
 

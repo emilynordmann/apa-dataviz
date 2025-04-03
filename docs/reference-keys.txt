@@ -26,7 +26,6 @@ ai
 googling
 vignettes
 workshop-prep
-glossary-intro
 resources-intro
 webinar
 set-up
@@ -52,6 +51,7 @@ adding-colour
 editing-the-scale
 going-a-bit-wild
 faqs
+why-should-i-use-r-for-data-viz
 what-are-the-best-resources-for-learning-r-as-a-beginner
 what-are-the-best-resources-specifically-for-data-viz
 how-can-i-use-ai-to-help-me-learn-to-code
